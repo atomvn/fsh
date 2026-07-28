@@ -27,7 +27,7 @@ int fsh_num_builtins() {
 }
 
 int fsh_cd(char **args) {
-	if (args[1] = NULL) {
+	if (args[1] == NULL) {
 		fprintf(stderr, "fsh: expected argument to \"cd\"\n");
 	} else {
 		if (chdir(args[1]) != 0) {
@@ -74,7 +74,6 @@ int fsh_launch(char **args) {
 }
 
 int fsh_execute(char **args) {
-	int i;
 	if (args[0] == NULL) {
 		return 1;
 	}
@@ -98,6 +97,7 @@ char *fsh_read_line(void) {
 			exit(EXIT_FAILURE);
 		}
 	}
+	return line;
 #else 
 #define FSH_RL_BUFSIZE 1024
 	int bufsize = FSH_RL_BUFSIZE;
@@ -113,7 +113,7 @@ char *fsh_read_line(void) {
 	while(1) {
 		c = getchar();
 
-		if (c = EOF) {
+		if (c == EOF) {
 			exit(EXIT_SUCCESS);
 		} else if (c == '\n') {
 			buffer[position] = '\0';
@@ -143,7 +143,7 @@ char **fsh_split_line(char *line) {
 	char **tokens = malloc(bufsize * sizeof(char*));
 	char *token, **tokens_backup;
 
-	if (!token) {
+	if (!tokens) {
 		fprintf(stderr, "fsh: allocation error\n");
 		exit(EXIT_FAILURE);
 	}
